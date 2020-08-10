@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,20 +14,8 @@
 
 """This script is used to synthesize generated parts of this library."""
 
+import synthtool as s
 import synthtool.languages.java as java
 
-AUTOSYNTH_MULTIPLE_COMMITS = True
-
-service = 'speech'
-versions = ['v1', 'v1p1beta1']
-
-for version in versions:
-  library = java.bazel_library(
-      service=service,
-      version=version,
-      bazel_target=f'//google/cloud/{service}/{version}:google-cloud-{service}-{version}-java',
-  )
-
-java.common_templates(excludes=[
-    'README.md',
-])
+templates = java.common_templates(copy=False)
+s.copy(templates / 'README.md')
